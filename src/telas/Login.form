@@ -193,7 +193,7 @@
                               <Component id="txtSenha" min="-2" pref="236" max="-2" attributes="0"/>
                               <Component id="labelSenha1" min="-2" max="-2" attributes="0"/>
                               <Component id="labelLogin" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtLogin" min="-2" pref="236" max="-2" attributes="0"/>
+                              <Component id="txtEmail" min="-2" pref="236" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="19" max="32767" attributes="0"/>
                       </Group>
@@ -205,7 +205,7 @@
                           <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
                           <Component id="labelLogin" min="-2" pref="20" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtLogin" min="-2" pref="55" max="-2" attributes="0"/>
+                          <Component id="txtEmail" min="-2" pref="55" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="labelSenha1" min="-2" pref="20" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -230,7 +230,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="0" green="0" red="0" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Login"/>
+                    <Property name="text" type="java.lang.String" value="Email"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="Buttom">
@@ -265,7 +265,7 @@
                     <Property name="text" type="java.lang.String" value="N&#xe3;o tem uma conta? Cadastre-se"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtLogin">
+                <Component class="javax.swing.JTextField" name="txtEmail">
                   <Properties>
                     <Property name="dragEnabled" type="boolean" value="true"/>
                     <Property name="selectionColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -273,8 +273,8 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtLoginActionPerformed"/>
-                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtLoginKeyPressed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtEmailActionPerformed"/>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtEmailKeyPressed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JPasswordField" name="txtSenha">

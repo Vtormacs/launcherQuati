@@ -1,21 +1,17 @@
 package telas;
 
+import DAO.UsuarioDAO;
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import javax.swing.JOptionPane;
+import utilitarios.Utilitarios;
 
 public class Login extends javax.swing.JFrame {
 
     public Login() {
         initComponents();
-        initStyles();
-    }
-
-    private void initStyles() {
-        txtLogin.putClientProperty("JTextField.placeholderText", "Insira seu Login.");
-        txtSenha.putClientProperty("JTextField.placeholderText", "Insira sua Senha.");
+        
+        Utilitarios util = new Utilitarios();
+        util.InserirIcone(this);
     }
 
     @SuppressWarnings("unchecked")
@@ -32,7 +28,7 @@ public class Login extends javax.swing.JFrame {
         labelLogin = new javax.swing.JLabel();
         Buttom = new javax.swing.JButton();
         labelSenha = new javax.swing.JLabel();
-        txtLogin = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
         txtSenha = new javax.swing.JPasswordField();
         Buttom1 = new javax.swing.JButton();
         labelSenha1 = new javax.swing.JLabel();
@@ -74,7 +70,7 @@ public class Login extends javax.swing.JFrame {
 
         labelLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelLogin.setForeground(new java.awt.Color(0, 0, 0));
-        labelLogin.setText("Login");
+        labelLogin.setText("Email");
 
         Buttom.setBackground(new java.awt.Color(116, 46, 26));
         Buttom.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -92,16 +88,16 @@ public class Login extends javax.swing.JFrame {
         labelSenha.setForeground(new java.awt.Color(0, 0, 0));
         labelSenha.setText("Não tem uma conta? Cadastre-se");
 
-        txtLogin.setDragEnabled(true);
-        txtLogin.setSelectionColor(new java.awt.Color(255, 255, 255));
-        txtLogin.addActionListener(new java.awt.event.ActionListener() {
+        txtEmail.setDragEnabled(true);
+        txtEmail.setSelectionColor(new java.awt.Color(255, 255, 255));
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLoginActionPerformed(evt);
+                txtEmailActionPerformed(evt);
             }
         });
-        txtLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtLoginKeyPressed(evt);
+                txtEmailKeyPressed(evt);
             }
         });
 
@@ -145,7 +141,7 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelSenha1)
                     .addComponent(labelLogin)
-                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -154,7 +150,7 @@ public class Login extends javax.swing.JFrame {
                 .addGap(100, 100, 100)
                 .addComponent(labelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelSenha1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -239,50 +235,34 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtomActionPerformed
-        try {
-            // Comandos que você quer executar
-            String[] comandos = {
-                "cd /d \"C:\\Users\\vitor\\launcherQuati\\quati_beta\"", // Comando para mudar o diretório
-                "python testeQuati.py" // Comando para executar o script Python
-            };
+         try {
+            String email;
+            char[] senhaArray;
+            email = txtEmail.getText();
+            senhaArray = txtSenha.getPassword(); // Usando getPassword() em vez de getText()
 
-            // Cria um processo para executar os comandos
-            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", String.join(" && ", comandos));
-            builder.redirectErrorStream(true); // Redireciona o erro para a saída padrão
+            String senha = new String(senhaArray); // Convertendo char[] para String
+            UsuarioDAO dao = new UsuarioDAO();
+            dao.login(email, senha);
 
-            Process processo = builder.start();
+            java.util.Arrays.fill(senhaArray, '0'); // Zerando o array de senha para segurança
 
-            // Captura a saída do processo
-            InputStream inputStream = processo.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-
-            // Lê a saída do processo linha por linha
-            String linha;
-            while ((linha = reader.readLine()) != null) {
-                System.out.println(linha);
-            }
-
-            // Espera o processo terminar
-            processo.waitFor();
-
-            // Fecha o BufferedReader
-            reader.close();
-
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro na tela de login  ");
         }
     }//GEN-LAST:event_ButtomActionPerformed
 
-    private void txtLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtLoginActionPerformed
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
 
-    private void txtLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLoginKeyPressed
+    }//GEN-LAST:event_txtEmailActionPerformed
+
+    private void txtEmailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtSenha.requestFocus();
         }
-    }//GEN-LAST:event_txtLoginKeyPressed
+    }//GEN-LAST:event_txtEmailKeyPressed
 
     private void txtSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaKeyPressed
         // TODO add your handling code here:
@@ -355,7 +335,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel labelLogin;
     private javax.swing.JLabel labelSenha;
     private javax.swing.JLabel labelSenha1;
-    private javax.swing.JTextField txtLogin;
+    private javax.swing.JTextField txtEmail;
     private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
 
