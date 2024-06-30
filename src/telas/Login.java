@@ -242,7 +242,7 @@ public class Login extends javax.swing.JFrame {
         try {
             // Comandos que você quer executar
             String[] comandos = {
-                "cd /d \"C:\\Users\\vitor\\QuatiIguaçu\\quati_beta\"", // Comando para mudar o diretório
+                "cd /d \"C:\\Users\\vitor\\launcherQuati\\quati_beta\"", // Comando para mudar o diretório
                 "python testeQuati.py" // Comando para executar o script Python
             };
 
