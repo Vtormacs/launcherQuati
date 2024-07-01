@@ -81,7 +81,7 @@ public class UsuarioDAO {
                 if (senhaCriptografada.equals(senhaBanco)) {
 
                     String[] comandos = {
-                        "cd /d \"C:\\Users\\vitor\\launcherQuati\\quati_beta\"", // Comando para mudar o diretório
+                        "cd /d \"C:\\Users\\vtorl\\launcherQuati\\quati_beta\"", // Comando para mudar o diretório
                         "python testeQuati.py" // Comando para executar o script Python
                     };
 

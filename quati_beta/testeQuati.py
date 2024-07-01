@@ -1,12 +1,12 @@
-
 import pygame
 import random
 import sys
 
 pygame.init()
 
-# Set the window size to match the background image resolution
-WIDTH, HEIGHT = 1920, 1080
+# Get the current screen resolution
+info = pygame.display.Info()
+WIDTH, HEIGHT = info.current_w, info.current_h
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Quati Iguaçu")
 
@@ -23,12 +23,17 @@ PINK = (255, 192, 203)
 FPS = 60
 FONT = pygame.font.SysFont('Arial', 24)
 
-# Assets
-PENNY_IMG = pygame.image.load('penny.png')
-CLIENT_IMG = pygame.image.load('client.png')
-TABLE_IMG = pygame.image.load('table.png')
-RESTING_POINT_IMG = pygame.image.load('restingPoint.png')
-BACKGROUND_IMG = pygame.image.load('background.png')
+# Load and scale assets
+def load_and_scale_image(image_path, scale_width, scale_height):
+    img = pygame.image.load(image_path)
+    return pygame.transform.scale(img, (scale_width, scale_height))
+
+# Load and scale assets according to the screen size
+PENNY_IMG = load_and_scale_image('penny.png', WIDTH // 15, HEIGHT // 15)
+CLIENT_IMG = load_and_scale_image('client.png', WIDTH // 30, HEIGHT // 15)
+TABLE_IMG = load_and_scale_image('table.png', WIDTH // 10, HEIGHT // 10)
+RESTING_POINT_IMG = load_and_scale_image('restingPoint.png', WIDTH // 10, HEIGHT // 10)
+BACKGROUND_IMG = load_and_scale_image('background.png', WIDTH, HEIGHT)
 
 # Classes
 class Button:
@@ -47,7 +52,7 @@ class Button:
 class Client(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-        self.image = pygame.Surface((50, 50))  # Use a Surface to draw colors
+        self.image = pygame.Surface((WIDTH // 30, HEIGHT // 15))  # Use a Surface to draw colors
         self.image.fill(GRAY)  # Default color
         self.rect = self.image.get_rect(topleft=(x, y))
         self.wait_time = 600  # 10 seconds * 60 FPS
@@ -179,7 +184,13 @@ def game_loop():
                         if table.rect.collidepoint(pos) and not table.client:
                             table.client = selected_client
                             selected_client.state = 'moving'
-                            chair_positions = [(205, 452), (963, 606), (1110, 444), (905, 785), (606, 935)]
+                            chair_positions = [
+                                (int(205 * WIDTH / 1920), int(452 * HEIGHT / 1080)),
+                                (int(963 * WIDTH / 1920), int(606 * HEIGHT / 1080)),
+                                (int(1110 * WIDTH / 1920), int(444 * HEIGHT / 1080)),
+                                (int(905 * WIDTH / 1920), int(785 * HEIGHT / 1080)),
+                                (int(606 * WIDTH / 1920), int(935 * HEIGHT / 1080))
+                            ]
                             selected_client.target_pos = chair_positions[i]
                             selected_client.table = table
                             print(f"Client seated at table at position: {chair_positions[i]}")
@@ -252,18 +263,18 @@ def game_loop():
 start_button = Button(WIDTH // 2 - 50, HEIGHT // 2, 100, 50, "Start", GREEN)
 quit_button = Button(WIDTH - 110, 10, 100, 50, "Quit", WHITE)
 
-penny = Penny(400, 400)
-resting_point = Table(1500, 800, 150, 150)  # Resting point as a table
+penny = Penny(WIDTH // 4, HEIGHT // 4)
+resting_point = Table(WIDTH - 420, HEIGHT - 280, WIDTH // 10, HEIGHT // 10)  # Resting point as a table
 tables = pygame.sprite.Group()
 clients = pygame.sprite.Group()
 all_sprites = pygame.sprite.Group()
 
 table_positions = [
-    (317, 400, 150, 150),   # Table 1
-    (700, 500, 150, 150),   # Table 2
-    (1222, 383, 150, 150),   # Table 3
-    (330, 900, 150, 150),  # Table 4
-    (1025, 700, 150, 150)   # Table 5
+    (int(317 * WIDTH / 1920), int(400 * HEIGHT / 1080), WIDTH // 10, HEIGHT // 10),   # Table 1
+    (int(700 * WIDTH / 1920), int(500 * HEIGHT / 1080), WIDTH // 10, HEIGHT // 10),   # Table 2
+    (int(1222 * WIDTH / 1920), int(383 * HEIGHT / 1080), WIDTH // 10, HEIGHT // 10),  # Table 3
+    (int(330 * WIDTH / 1920), int(900 * HEIGHT / 1080), WIDTH // 10, HEIGHT // 10),  # Table 4
+    (int(1025 * WIDTH / 1920), int(700 * HEIGHT / 1080), WIDTH // 10, HEIGHT // 10)   # Table 5
 ]
 
 for pos in table_positions:
@@ -271,7 +282,7 @@ for pos in table_positions:
     tables.add(table)
     all_sprites.add(table)
 
-client_positions = [(45 + i * 100, 705) for i in range(4)]
+client_positions = [(int(45 * WIDTH / 1920) + i * (int(100 * WIDTH / 1920)), int(705 * HEIGHT / 1080)) for i in range(4)]
 for pos in client_positions:
     client = Client(pos[0], pos[1])
     clients.add(client)
